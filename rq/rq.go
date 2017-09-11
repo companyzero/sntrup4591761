@@ -1,3 +1,7 @@
+// Copyright (c) 2017 Company 0 LLC. All rights reserved.
+// Use of this source code is governed by an ISC-style
+// license that can be found in the LICENSE file.
+
 // This file implements operations in Rq, a univariate quotient polynomial
 // ring over GF(q) with modulus x^761 + 4590*x + 4590. It is a port of the
 // public domain, C reference implementation.

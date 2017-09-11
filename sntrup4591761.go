@@ -49,7 +49,7 @@ func GenerateKey(s io.Reader) (*[PublicKeySize]byte, *[PrivateKeySize]byte, erro
 	// Obtain a random g.
 	g := new([761]int8)
 	gr := new([761]int8)
-	for true {
+	for {
 		err := zx.RandomSmall(g, s)
 		if err != nil {
 			return nil, nil, err

@@ -1,3 +1,7 @@
+// Copyright (c) 2017 Company 0 LLC. All rights reserved.
+// Use of this source code is governed by an ISC-style
+// license that can be found in the LICENSE file.
+
 // This file implements operations in R3, a univariate quotient polynomial
 // ring over GF(3) with modulus x^761 + 2*x + 2. It is a port of the public
 // domain, C reference implementation.

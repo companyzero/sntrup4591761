@@ -1,3 +1,7 @@
+// Copyright (c) 2017 Company 0 LLC. All rights reserved.
+// Use of this source code is governed by an ISC-style
+// license that can be found in the LICENSE file.
+
 // These routines are a port of the public domain, C reference implementation.
 
 package zx
