@@ -65,7 +65,7 @@ func Reciprocal(r, s *[761]int8) int {
 	return smallerMask(0, d)
 }
 
-// Mult returns the product h of f ang g in R3.
+// Mult returns the product h of f and g in R3.
 func Mult(h, f, g *[761]int8) {
 	fg := new([761*2 - 1]int8)
 	for i := 0; i < 761; i++ {

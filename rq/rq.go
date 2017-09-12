@@ -71,7 +71,7 @@ func Round3(h, f *[761]int16) {
 	}
 }
 
-// Mult returns the product h of f ang g in Rq.
+// Mult returns the product h of f and g in Rq.
 func Mult(h, f *[761]int16, g *[761]int8) {
 	fg := new([761*2 - 1]int16)
 	for i := 0; i < 761; i++ {
