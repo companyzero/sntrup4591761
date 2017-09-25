@@ -40,10 +40,10 @@ func testKeyDerivation(t *testing.T, params *[7][]byte) {
 	gr := new([761]int8)
 	r3.Reciprocal(gr, g)
 	pk, sk := deriveKey(f, g, gr)
-	if equal(epk[:], pk[:]) == false {
+	if !equal(epk[:], pk[:]) {
 		t.Fatalf("wrong public key; expected %v, got %v", epk, pk)
 	}
-	if equal(esk[:], sk[:]) == false {
+	if !equal(esk[:], sk[:]) {
 		t.Fatalf("wrong private key; expected %v, got %v", epk, pk)
 	}
 }
@@ -57,10 +57,10 @@ func testEncapsulation(t *testing.T, params *[7][]byte) {
 	ec := params[5]
 	ek := params[6]
 	c, k := createCipher(r, pk)
-	if equal(ec, c[:]) == false {
+	if !equal(ec, c[:]) {
 		t.Fatalf("wrong ciphertext; expected %v, got %v", ec, c)
 	}
-	if equal(ek, k[:]) == false {
+	if !equal(ek, k[:]) {
 		t.Fatalf("wrong shared key; expected %v, got %v", ek, k)
 	}
 }
@@ -77,7 +77,7 @@ func testDecapsulation(t *testing.T, params *[7][]byte) {
 	if ok != 1 {
 		t.Fatalf("Decapsulation error")
 	}
-	if equal(ek, k[:]) == false {
+	if !equal(ek, k[:]) {
 		t.Fatalf("wrong ciphertext; expected %v, got %v", ek, k)
 	}
 }

@@ -6,9 +6,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/companyzero/sntrup4591761"
 	"io"
 	"os"
+
+	"github.com/companyzero/sntrup4591761"
 )
 
 func usageError() {

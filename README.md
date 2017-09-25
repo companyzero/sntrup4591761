@@ -1,6 +1,9 @@
 # Streamlined NTRU Prime 4591^761
 
-This repository contains a Go library implementing the [Streamlined NTRU Prime 4591<sup>761</sup> cryptosystem](https://ntruprime.cr.yp.to/ntruprime-20170816.pdf). Most of the code consists of a port of the reference C implementation.
+[![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/companyzero/sntrup4591761)
+
+sntrup4591761 is a Go library implementing the [Streamlined NTRU Prime 4591<sup>761</sup> cryptosystem](https://ntruprime.cr.yp.to/ntruprime-20170816.pdf). Most of the code consists of a port of the reference C implementation.
 
 ## Constants
 
@@ -47,3 +50,7 @@ A set of 128 different instances of NTRU Prime were simulated in Sage and their 
 ### Running the tests
 
 To run the Sage tests and other tests, ensure that the repository lies in your GOPATH and run `go test -v`.
+
+## License
+
+sntrup4591761 is licensed under the [copyfree](http://copyfree.org) ISC License.
