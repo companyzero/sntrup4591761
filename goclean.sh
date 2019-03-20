@@ -16,29 +16,18 @@ set -ex
 # run tests
 env GORACE="halt_on_error=1" go test -race ./...
 
-# Make sure gometalinter is installed and $GOPATH/bin is in your path.
-# $ go get -v github.com/alecthomas/gometalinter"
-# $ gometalinter --install"
-if [ ! -x "$(type -p gometalinter)" ]; then
-  exit 1
-fi
-
 # check linters
 # linters do not work with modules yet
-go mod vendor
-unset GO111MODULE
-gometalinter --vendor --disable-all --deadline=10m \
+golangci-lint run --disable-all --deadline=10m \
   --enable=gofmt \
   --enable=goimports \
   --enable=vet \
   --enable=gosimple \
   --enable=unconvert \
   --enable=ineffassign \
-  --enable=unused \
-  ./...
+  --enable=unused
 
 # Run test coverage on each subdirectories and merge the coverage profile.
-export GO111MODULE=on
 echo "mode: count" > profile.cov
 
 # Standard go tooling behavior is to ignore dirs with leading underscores.
