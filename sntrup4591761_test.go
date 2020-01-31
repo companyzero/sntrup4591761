@@ -40,10 +40,10 @@ func testKeyDerivation(t *testing.T, params *[7][]byte) {
 	gr := new([761]int8)
 	r3.Reciprocal(gr, g)
 	pk, sk := deriveKey(f, g, gr)
-	if !equal(epk[:], pk[:]) {
+	if !equal(epk, pk[:]) {
 		t.Fatalf("wrong public key; expected %v, got %v", epk, pk)
 	}
-	if !equal(esk[:], sk[:]) {
+	if !equal(esk, sk[:]) {
 		t.Fatalf("wrong private key; expected %v, got %v", epk, pk)
 	}
 }

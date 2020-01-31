@@ -1,7 +1,11 @@
-# Streamlined NTRU Prime 4591^761
+sntrup4591761
+=============
 
-[![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
-[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/companyzero/sntrup4591761)
+[![Build Status](https://github.com/companyzero/sntrup4591761/workflows/Build%20and%20Test/badge.svg)](https://github.com/companyzero/sntrup4591761/actions)
+[![ISC License](https://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](https://godoc.org/github.com/companyzero/sntrup4591761)
+
+# Streamlined NTRU Prime 4591^761
 
 sntrup4591761 is a Go library implementing the [Streamlined NTRU Prime 4591<sup>761</sup> cryptosystem](https://ntruprime.cr.yp.to/ntruprime-20170816.pdf). Most of the code consists of a port of the reference C implementation.
 
