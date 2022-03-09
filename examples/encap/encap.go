@@ -52,7 +52,7 @@ func main() {
 	}
 	defer cf.Close()
 
-	pk := new([sntrup4591761.PublicKeySize]byte)
+	pk := new(sntrup4591761.PublicKey)
 	_, err = io.ReadFull(pkf, pk[:])
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)

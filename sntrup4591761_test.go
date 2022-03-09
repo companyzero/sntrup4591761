@@ -52,7 +52,7 @@ func testKeyDerivation(t *testing.T, params *[7][]byte) {
 // generated ciphertext and shared key match those created by Sage.
 func testEncapsulation(t *testing.T, params *[7][]byte) {
 	r := zx.Decode(params[2])
-	pk := new([PublicKeySize]byte)
+	pk := new(PublicKey)
 	copy(pk[:], params[3])
 	ec := params[5]
 	ek := params[6]
@@ -68,9 +68,9 @@ func testEncapsulation(t *testing.T, params *[7][]byte) {
 // testDecapsulation ensures that, given a ciphertext and a private key, the
 // derived shared key matches the one calculated by Sage.
 func testDecapsulation(t *testing.T, params *[7][]byte) {
-	sk := new([PrivateKeySize]byte)
+	sk := new(PrivateKey)
 	copy(sk[:], params[4])
-	c := new([CiphertextSize]byte)
+	c := new(Ciphertext)
 	copy(c[:], params[5])
 	ek := params[6]
 	k, ok := Decapsulate(c, sk)
