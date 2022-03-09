@@ -43,14 +43,14 @@ func main() {
 	}
 	defer cf.Close()
 
-	sk := new([sntrup4591761.PrivateKeySize]byte)
+	sk := new(sntrup4591761.PrivateKey)
 	_, err = io.ReadFull(skf, sk[:])
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)
 	}
 
-	c := new([sntrup4591761.CiphertextSize]byte)
+	c := new(sntrup4591761.Ciphertext)
 	_, err = io.ReadFull(cf, c[:])
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)

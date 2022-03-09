@@ -26,8 +26,15 @@ const (
 	SharedKeySize  = 32
 )
 
+type (
+	PrivateKey = [PrivateKeySize]byte
+	PublicKey  = [PublicKeySize]byte
+	Ciphertext = [CiphertextSize]byte
+	SharedKey  = [SharedKeySize]byte
+)
+
 // deriveKey implements the deterministic part of GenerateKey.
-func deriveKey(f, g, gr *[761]int8) (*[PublicKeySize]byte, *[PrivateKeySize]byte) {
+func deriveKey(f, g, gr *[761]int8) (*PublicKey, *PrivateKey) {
 	// public key
 	f3r := new([761]int16)
 	rq.Reciprocal3(f3r, f)
@@ -36,7 +43,7 @@ func deriveKey(f, g, gr *[761]int8) (*[PublicKeySize]byte, *[PrivateKeySize]byte
 	pk := rq.Encode(h)
 
 	// private key
-	sk := new([PrivateKeySize]byte)
+	sk := new(PrivateKey)
 	copy(sk[:], zx.Encode(f)[:])
 	copy(sk[191:], zx.Encode(gr)[:])
 	copy(sk[382:], pk[:])
@@ -45,7 +52,7 @@ func deriveKey(f, g, gr *[761]int8) (*[PublicKeySize]byte, *[PrivateKeySize]byte
 }
 
 // GenerateKey returns a new public/private key pair with randomness from s.
-func GenerateKey(s io.Reader) (*[PublicKeySize]byte, *[PrivateKeySize]byte, error) {
+func GenerateKey(s io.Reader) (*PublicKey, *PrivateKey, error) {
 	// Obtain a random g.
 	g := new([761]int8)
 	gr := new([761]int8)
@@ -72,7 +79,7 @@ func GenerateKey(s io.Reader) (*[PublicKeySize]byte, *[PrivateKeySize]byte, erro
 }
 
 // createCipher implements the deterministic part of Encapsulate.
-func createCipher(r *[761]int8, pk *[PublicKeySize]byte) (*[CiphertextSize]byte, *[SharedKeySize]byte) {
+func createCipher(r *[761]int8, pk *PublicKey) (*Ciphertext, *SharedKey) {
 	// Multiply the public key h by r to arrive at a ciphertext c.
 	// The ciphertext's coefficients are rounded.
 	h := rq.Decode(pk[:])
@@ -82,13 +89,13 @@ func createCipher(r *[761]int8, pk *[PublicKeySize]byte) (*[CiphertextSize]byte,
 
 	// The shared key is taken as the second half of the sha512 of the
 	// random t-small element r.
-	k := new([32]byte)
+	k := new(SharedKey)
 	s := sha512.Sum512(zx.Encode(r)[:])
 	copy(k[:], s[32:])
 
 	// The ciphertext is prefixed with the first half of the sha512
 	// hash as a confirmation token.
-	cstr := new([1047]byte)
+	cstr := new(Ciphertext)
 	copy(cstr[:], s[:32])
 	copy(cstr[32:], rq.EncodeRounded(c)[:])
 
@@ -98,7 +105,7 @@ func createCipher(r *[761]int8, pk *[PublicKeySize]byte) (*[CiphertextSize]byte,
 // Encapsulate generates a random shared key and encrypts it with the given
 // public key. The shared key and its corresponding ciphertext are returned.
 // Randomness is obtained from s.
-func Encapsulate(s io.Reader, pk *[PublicKeySize]byte) (*[CiphertextSize]byte, *[SharedKeySize]byte, error) {
+func Encapsulate(s io.Reader, pk *PublicKey) (*Ciphertext, *SharedKey, error) {
 	r := new([761]int8)
 	err := zx.RandomTSmall(r, s)
 	if err != nil {
@@ -111,7 +118,7 @@ func Encapsulate(s io.Reader, pk *[PublicKeySize]byte) (*[CiphertextSize]byte, *
 
 // Decapsulate uses a private key to decrypt a ciphertext, returning a
 // shared key.
-func Decapsulate(cstr *[CiphertextSize]byte, sk *[PrivateKeySize]byte) (*[SharedKeySize]byte, int) {
+func Decapsulate(cstr *Ciphertext, sk *PrivateKey) (*SharedKey, int) {
 	// Multiply c by f to arrive at t.
 	f := zx.Decode(sk[:191])
 	c := rq.DecodeRounded(cstr[32:])
@@ -150,7 +157,7 @@ func Decapsulate(cstr *[CiphertextSize]byte, sk *[PrivateKeySize]byte) (*[Shared
 	s := sha512.Sum512(zx.Encode(r)[:])
 	ok &= subtle.ConstantTimeCompare(s[:32], cstr[:32])
 
-	k := new([32]byte)
+	k := new(SharedKey)
 	copy(k[:], s[32:])
 
 	return k, ok
